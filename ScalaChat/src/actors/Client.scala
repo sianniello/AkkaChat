@@ -16,7 +16,7 @@ object ChatClientApplication {
 
 	def main(args:Array[String]) {  
 
-		println("Starting Akka Chat Client Actor")
+		println("Avvio Chat Client")
 		/* construct client with current machine's IP address instead of using the config value
 		 * get network interfaces make sure it's not loopbak (i.e. points outside of itself)
 		 * and filter for those that are actually "up"
@@ -29,7 +29,7 @@ object ChatClientApplication {
 		 */
 		val ipAddress = interfaces.head.getInterfaceAddresses.filter(_.getBroadcast != null).head.getAddress.getHostAddress 
 		// In some circles this would be the username
-		val identity = readLine("identify yourself: ")
+		val identity = readLine("nickname: ")
 
 		/* tinker with configurations so that our client uses it's own IP address and not one that is 
 		 * hard-coded in application.conf. In short it this line was not there my ip would be 
@@ -62,7 +62,7 @@ object ChatClientApplication {
 		val privateMessageRegex = """^@([^\s]+) (.*)$""".r
 
 		// we can implement a help feature here to explain the protocol
-		println("Type /join to join the chat room")
+		println("Digita /join per entrare in chat")
 
 		/* Iterate infinitely over a stream created from our jline console reader object and 
 		 * use some functional concepts over this i.e. pattern matching takeWhile and the 
@@ -87,7 +87,7 @@ object ChatClientApplication {
 		}
 		}
 
-		println("Exiting...")
+		println("Uscita...")
 		// Tell the server to remove us from currently connected clients
 		server.tell(Unregister(identity), client)
 		// find a graceful way to exit the application here
@@ -110,6 +110,6 @@ class ChatClientActor  extends Actor {
 	case RegisteredClientList(list) =>
 	for (x <- list) println(x)
 
-	case _ => println("Client Received something")
+	case _ => println("Il client ha ricevuto qualcosa")
 	}
 }
