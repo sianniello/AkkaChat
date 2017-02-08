@@ -1,8 +1,14 @@
 package actors
 
-import akka.actor.{Actor, Props, ActorSystem, ActorRef, PoisonPill}
 import collection.mutable.Map
 import messages._
+import messages.Unregister
+import messages.StartUp
+import messages.RegisteredClients
+import messages.RegisterClientMessage
+import messages.PrivateMessage
+import messages.ChatMessage
+import akka.actor._
 import com.typesafe.config.ConfigFactory
 
 object ChatServerApplication extends App {

@@ -1,7 +1,6 @@
 package messages
 
-import akka.actor.{ActorRef}
-import collection.mutable.Map
+import akka.actor._
 
 sealed trait  Message
 
