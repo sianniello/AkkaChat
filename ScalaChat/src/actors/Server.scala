@@ -36,7 +36,7 @@ class ChatServerActor extends Actor {
           println(s"${identity} ha tentato di unirsi da ${client}")
           sender ! ChatInfo(s"REGISTRAZIONE FALLITA: ${identity} già registrato")
         }else{
-          println(s"${identity} si è aggiunto alla stanza da ${client}")
+          println(s"${identity} si è aggiunto alla stanza da ${client.path.address.host}")
           
           // aggiunta del nuovo client alla map dei client connessi
           connectedClients += (identity -> client)
@@ -48,7 +48,7 @@ class ChatServerActor extends Actor {
 
     case StartUp =>
       println("Ricevuto segnale di avvio")
-      println(self.path.address.host)
+      println(self)
 
     case RegisteredClients =>
       println(s"${sender.path.name} richiesta per la lista della stanza")
