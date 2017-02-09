@@ -17,16 +17,8 @@ object ChatClientApplication {
 	def main(args:Array[String]) {  
 
 		println("Avvio Chat Client")
-		/* construct client with current machine's IP address instead of using the config value
-		 * get network interfaces make sure it's not loopbak (i.e. points outside of itself)
-		 * and filter for those that are actually "up"
-		 */
 		val interfaces = new JEnumerationWrapper(NetworkInterface.getNetworkInterfaces).toList.filter(!_.isLoopback).filter(_.isUp)
-		/** Ideally this should give a list of ip addresses and then we choose the one we want
-		 * but alas I am lazy so just pop the first ip address that works and use it instead
-		 * I use getBroadcast here as a subtle way of filtering out IPV6 addresses they have 
-		 * a null value
-		 */
+		
 		val ipAddress = interfaces.head.getInterfaceAddresses.filter(_.getBroadcast != null).head.getAddress.getHostAddress 
 		val identity = readLine("nickname: ")
 
@@ -55,12 +47,13 @@ object ChatClientApplication {
 		// costruzione del client utilizzando l'ActorSystem definito
 		val client = system.actorOf(Props(classOf[ChatClientActor]), name = identity)
 
-		// some input parsing logic to filter out private messages and so special things to it
-		// like NOT Broadcast it to all connected clients
+		// espressione regolare per l'invio di un messaggio privato nel formato @nickname messaggio
 		val privateMessageRegex = """^@([^\s]+) (.*)$""".r
 
-		// TODO implementare la funzione /help 
 		println("Digita /join per entrare in chat")
+		println("Digita /list per la lista degli utenti connessi")
+		println("Digita /leave per lasciare la chat")
+		println("Digita @'nickname' per mandare un messaggio privato")
 
 		// Ciclo infinito per l'invio dei messaggi
 

@@ -28,7 +28,7 @@ class ChatServerActor extends Actor {
     case m @ ChatMessage(x: String) =>
       println(sender.path.name + ": " + x)
       
-      // questo messaggio è inviato a tutti eccetto il mittente
+      // questo messaggio inviato a tutti eccetto il mittente
       connectedClients.values.filter(_ != sender).foreach(_.forward(m))
 
     case RegisterClientMessage(client: ActorRef, identity: String) =>
