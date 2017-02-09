@@ -48,7 +48,7 @@ class ChatServerActor extends Actor {
 
     case StartUp =>
       println("Ricevuto segnale di avvio")
-      //println(self)
+      println(self.path.address.host)
 
     case RegisteredClients =>
       println(s"${sender.path.name} richiesta per la lista della stanza")
