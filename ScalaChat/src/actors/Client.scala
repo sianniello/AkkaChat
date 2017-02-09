@@ -43,7 +43,7 @@ object ChatClientApplication {
 		val serverPort = serverconfig.getString("akka.remote.netty.tcp.port")
 		val serverPath = s"akka.tcp://AkkaChat@$serverAddress:$serverPort/user/chatserver"
 		val server = system.actorSelection(serverPath) // <-- this is where we get the server reference
-
+		println(server)
 		// costruzione del client utilizzando l'ActorSystem definito
 		val client = system.actorOf(Props(classOf[ChatClientActor]), name = identity)
 
