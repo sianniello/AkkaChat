@@ -28,7 +28,6 @@ object ChatClientApplication {
 		 * a null value
 		 */
 		val ipAddress = interfaces.head.getInterfaceAddresses.filter(_.getBroadcast != null).head.getAddress.getHostAddress 
-		// In some circles this would be the username
 		val identity = readLine("nickname: ")
 
 		/* tinker with configurations so that our client uses it's own IP address and not one that is 
@@ -45,8 +44,7 @@ object ChatClientApplication {
 		val system = ActorSystem("AkkaChat", completeConfig)
 
 		/*
-		 * get the server reference here because we will bind and forward messages to
-		 * it from our nifty console input
+		 * binding con il server
 		 */
 		val serverconfig = ConfigFactory.load.getConfig("chatserver")
 		val serverAddress = serverconfig.getString("akka.remote.netty.tcp.hostname")
@@ -54,20 +52,18 @@ object ChatClientApplication {
 		val serverPath = s"akka.tcp://AkkaChat@$serverAddress:$serverPort/user/chatserver"
 		val server = system.actorSelection(serverPath) // <-- this is where we get the server reference
 
-		// NOW CONSTRUCT THE CLIENT using as a member of the system defined above
+		// costruzione del client utilizzando l'ActorSystem definito
 		val client = system.actorOf(Props(classOf[ChatClientActor]), name = identity)
 
 		// some input parsing logic to filter out private messages and so special things to it
 		// like NOT Broadcast it to all connected clients
 		val privateMessageRegex = """^@([^\s]+) (.*)$""".r
 
-		// we can implement a help feature here to explain the protocol
+		// TODO implementare la funzione /help 
 		println("Digita /join per entrare in chat")
 
-		/* Iterate infinitely over a stream created from our jline console reader object and 
-		 * use some functional concepts over this i.e. pattern matching takeWhile and the 
-		 * lovely foreach
-		 */
+		// Ciclo infinito per l'invio dei messaggi
+
 		Iterator.continually(readLine("> ")).takeWhile(_ != "/exit").foreach { msg =>
 		msg match {
 		case "/list" =>
@@ -88,9 +84,8 @@ object ChatClientApplication {
 		}
 
 		println("Uscita...")
-		// Tell the server to remove us from currently connected clients
+		// Notifica il server di rimuovere il client da quelli registrati
 		server.tell(Unregister(identity), client)
-		// find a graceful way to exit the application here
 	}
 }
 

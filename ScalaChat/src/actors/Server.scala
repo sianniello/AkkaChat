@@ -20,13 +20,15 @@ object ChatServerApplication extends App {
 
 class ChatServerActor extends Actor {
 
-  val connectedClients:Map[String, ActorRef] = Map() //<-- this is a MUTABLE map
+  // Map dei client connessi
+  val connectedClients:Map[String, ActorRef] = Map() //<-- mutable map
 
   def receive = {
 
     case m @ ChatMessage(x: String) =>
       println(sender.path.name + ": " + x)
-      // send this message to everyone in the room except the person who sent it
+      
+      // questo messaggio è inviato a tutti eccetto il mittente
       connectedClients.values.filter(_ != sender).foreach(_.forward(m))
 
     case RegisterClientMessage(client: ActorRef, identity: String) =>
@@ -35,6 +37,8 @@ class ChatServerActor extends Actor {
           sender ! ChatInfo(s"REGISTRAZIONE FALLITA: ${identity} già registrato")
         }else{
           println(s"${identity} si è aggiunto alla stanza da ${client}")
+          
+          // aggiunta del nuovo client alla map dei client connessi
           connectedClients += (identity -> client)
           sender ! ChatInfo("REGISTRATO")
         }
