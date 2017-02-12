@@ -56,8 +56,9 @@ class ChatServerActor extends Actor {
 
     case Unregister(identity) =>
         println(s"${identity} lascia questa stanza")
-        // remove client from registered client set and send poison pill
-        connectedClients.remove(identity).foreach(_ ! PoisonPill) //<-- this is why we use the MUTABLE map
+        
+        // rimuove il client da quelli registrati
+        connectedClients.remove(identity).foreach(_ ! PoisonPill)
 
     case _ => println("Comunicazione fuori protocollo")
   }

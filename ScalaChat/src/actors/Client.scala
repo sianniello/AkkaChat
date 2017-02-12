@@ -22,17 +22,11 @@ object ChatClientApplication {
 		val ipAddress = interfaces.head.getInterfaceAddresses.filter(_.getBroadcast != null).head.getAddress.getHostAddress 
 		val identity = readLine("nickname: ")
 
-		/* tinker with configurations so that our client uses it's own IP address and not one that is 
-		 * hard-coded in application.conf. In short it this line was not there my ip would be 
-		 * 127.0.0.1
-		 */
+		// il client utilizza il proprio indirizzo ip
 		val clientConfig = ConfigFactory.parseString(s"""akka.remote.netty.tcp.hostname="$ipAddress" """)
 		val defaultConfig = ConfigFactory.load.getConfig("chatclient")
 		val completeConfig = clientConfig.withFallback(defaultConfig)
 
-		/* construct system using the complete config which is a result of "merging"
-		 * the parsed string and the default configs from the akka remote sub-system
-		 */
 		val system = ActorSystem("AkkaChat", completeConfig)
 
 		/*
