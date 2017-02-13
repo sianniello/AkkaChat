@@ -46,7 +46,8 @@ object ChatClientApplication {
 
 		println("Digita /join per entrare in chat")
 		println("Digita /list per la lista degli utenti connessi")
-		println("Digita /leave per lasciare la chat")
+		println("Digita /leave per lasciare la stanza")
+		println("Digita /exit per uscire")
 		println("Digita @'nickname' per mandare un messaggio privato")
 
 		// Ciclo infinito per l'invio dei messaggi
