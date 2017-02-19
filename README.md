@@ -2,7 +2,7 @@
 
 ##Intro
 La chat è ispirata al protocollo IRC e permette la comunicazione sia all'interno di stanze in cui tutti leggono tutto, sia
-privata tra due utenti. Per l'implementazione oltre alla libreria nativa di scala sono stati utilizzati gli __attori__ importanto
+privata tra due utenti. Per l'implementazione, oltre alla libreria nativa di scala, sono stati utilizzati gli __attori__ importando
 la libreria __akka__.
 
 Il progetto è composto da due package: _messages_ e _actors_. Il package messages contiene un trait sailed che specifica
@@ -16,8 +16,8 @@ dell'attore non è in condivisione con nessun altro thread e ogni messaggio rice
 
 La funzione di ricezione basa il proprio comportamento sul __pattern matching__ dei messaggi ricevuti (definiti nel trait Message). 
 Attraverso le funzioni _filter_ e _foreach_ è possibile trovare il destinatario di un messaggio privato ed escludere il mittente dal 
-broadcast. La comunicazione privata tra i client è trasparente per gli utenti, questi ultimi potranno scambiarsi messaggi senza rendersi
-conto della presenza del server.
+broadcast (per evitare che il mittente riceva anche i propri messaggi). La comunicazione privata tra i client è trasparente per 
+gli utenti, questi ultimi potranno scambiarsi messaggi senza rendersi conto della presenza del server.
 
 ##Client
 Ha il compito di interagire con l'utente e di gestire il collegamento con il server. La parte principale risiede all'interno del ciclo 
