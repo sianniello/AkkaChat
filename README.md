@@ -7,7 +7,7 @@ la libreria __akka__.
 
 Il progetto è composto da due package: _messages_ e _actors_. Il package messages contiene un trait sailed che specifica
 tutti i possibili tipi di messaggi che possono scambiarsi gli attori.
-Il package actors contiene le due classi principali che consensono la comunicazione: _Client_ e _Server_.
+Il package actors contiene le due classi principali che consentono la comunicazione: _Client_ e _Server_.
 
 
 ##Server
