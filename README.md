@@ -22,7 +22,7 @@ gli utenti, questi ultimi potranno scambiarsi messaggi senza rendersi conto dell
 ##Client
 Ha il compito di interagire con l'utente e di gestire il collegamento con il server. La parte principale risiede all'interno del ciclo 
 _Iterator.continually_ in cui il client invia i comandi creati dall'utente e resta in attesa fino al comando successivo.
-Nella funzione __tell_ specificando come secondo parametro il client stesso è possibile far ricevere le risposte direttamente all'attore
+Nella funzione _tell_ specificando come secondo parametro il client stesso è possibile far ricevere le risposte direttamente all'attore
 mittente coinvolto.
 
 ##Configurazione
